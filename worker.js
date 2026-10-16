@@ -82,20 +82,21 @@ const BASE_CSS = `
 `;
 
 // fetch 강아지 (확장의 후원 카드와 같은 그림). 대두에 울망울망 눈, 깜빡이기만 한다.
-const P = { body: "#d9a066", ear: "#a8693a", snout: "#f2d2a2", ink: "#2b1d14" };
+const P = { body: "#dba468", ear: "#9a5f34", snout: "#f6dcb2", ink: "#24170f" };
 const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <g class="tail"><path d="M80 102 Q100 98 104 80" stroke="${P.body}" stroke-width="7" stroke-linecap="round" fill="none"/></g>
     <ellipse cx="60" cy="99" rx="26" ry="21" fill="${P.body}"/>
     <ellipse cx="60" cy="103" rx="13" ry="14" fill="${P.snout}"/>
     <ellipse cx="50" cy="117" rx="8" ry="5" fill="${P.ear}"/><ellipse cx="70" cy="117" rx="8" ry="5" fill="${P.ear}"/>
     <g transform="translate(60 54) scale(1.3) translate(-60 -54)"><g class="head">
-      <path d="M33 30 C18 34 16 60 26 70 C33 64 36 46 38 34Z" fill="${P.ear}"/>
-      <path d="M87 30 C102 34 104 60 94 70 C87 64 84 46 82 34Z" fill="${P.ear}"/>
+      <path d="M41 21 C30 15 17 22 18 39 C19 52 23 61 30 62 C37 62.5 40 54 40 46 Z" fill="${P.ear}"/>
+      <path d="M79 21 C90 15 103 22 102 39 C101 52 97 61 90 62 C83 62.5 80 54 80 46 Z" fill="${P.ear}"/>
       <circle cx="60" cy="46" r="29" fill="${P.body}"/>
+      <path d="M55.5 17.6 Q60 16.8 64.5 17.6 L62.6 39 Q60 41.5 57.4 39 Z" fill="#e9bd85"/>
       <ellipse cx="41" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/><ellipse cx="79" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/>
-      <ellipse cx="60" cy="61" rx="13" ry="10" fill="${P.snout}"/>
-      <ellipse cx="60" cy="56" rx="5" ry="3.6" fill="${P.ink}"/>
-      <path d="M60 59.5 v3 M54.5 64 q2.75 2.6 5.5 0 q2.75 2.6 5.5 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="60" cy="63" rx="17.5" ry="11.5" fill="${P.snout}"/>
+      <path d="M53.6 54.2 Q60 51.4 66.4 54.2 Q65.6 59.6 60 60.8 Q54.4 59.6 53.6 54.2 Z" fill="${P.ink}"/><ellipse cx="58" cy="54.4" rx="2.2" ry="1" fill="#fff" opacity=".35"/>
+      <path d="M60 60.8 v2.4 M54.5 64.6 q2.75 2.6 5.5 0 q2.75 2.6 5.5 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
       <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M37 33 Q43 27 50 30"/><path d="M70 30 Q77 27 83 33"/></g>
       <g class="eyes">
         <circle cx="45.5" cy="44" r="9" fill="${P.ink}"/><circle cx="74.5" cy="44" r="9" fill="${P.ink}"/>

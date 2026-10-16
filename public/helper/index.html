@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fetch 헬퍼 설치</title>
+<link rel="icon" href="/icon.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <a class="brand" href="/"><img src="/icon.png" alt=""><b>fetch</b></a>
+  <h1>피그마 연결 헬퍼 설치</h1>
+  <p class="lead">fetch로 저장한 이미지를 피그마에 바로 넣으려면 이 작은 헬퍼를 한 번 설치해야 해요.
+    크롬 확장은 컴퓨터에 프로그램을 설치할 수 없어서, 크롬과 피그마 데스크톱 앱 사이를 이어 줄 헬퍼가 따로 필요해요.</p>
+  <p class="small">이미지 저장만 쓴다면 설치하지 않아도 돼요.</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tabWin" aria-selected="true">Windows</button>
+    <button class="tab" role="tab" id="tabMac" aria-selected="false">Mac</button>
+  </div>
+
+  <section id="win" class="card">
+    <h3 style="margin-top:0">1. 아래 명령을 복사하세요</h3>
+    <div class="cmd"><code id="cmdWin">powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://coffee.ystmk1.workers.dev/helper/install.ps1 | iex"</code><button class="btn" data-copy="cmdWin">복사</button></div>
+    <h3>2. 실행 창에 붙여 넣고 Enter</h3>
+    <div class="keys"><kbd>Win</kbd>+<kbd>R</kbd><span>→</span><kbd>Ctrl</kbd>+<kbd>V</kbd><span>→</span><kbd>Enter</kbd></div>
+    <p class="small">파란 창이 잠깐 떴다가 2초 뒤 저절로 닫히면 끝이에요. 관리자 권한은 필요 없어요.</p>
+  </section>
+
+  <section id="mac" class="card" hidden>
+    <h3 style="margin-top:0">1. 아래 명령을 복사하세요</h3>
+    <div class="cmd"><code id="cmdMac">curl -fsSL https://coffee.ystmk1.workers.dev/helper/install.sh | bash</code><button class="btn" data-copy="cmdMac">복사</button></div>
+    <h3>2. 터미널에 붙여 넣고 Return</h3>
+    <div class="keys"><kbd>⌘</kbd>+<kbd>Space</kbd><span>→</span><span>"터미널"</span><span>→</span><kbd>⌘</kbd>+<kbd>V</kbd><span>→</span><kbd>Return</kbd></div>
+    <p class="small">"fetch helper installed"가 나오면 끝이에요. 터미널 창은 닫아도 돼요. macOS에 기본으로 있는 Perl로 동작해요.</p>
+  </section>
+
+  <p><b>3. 크롬으로 돌아가 fetch 아이콘을 누르면 자동으로 연결돼요.</b></p>
+
+  <h2>설치하면 하는 일</h2>
+  <ul class="check">
+    <li>헬퍼 파일 3개를 내 계정 폴더에만 넣어요: Windows <code>%LOCALAPPDATA%\FetchHelper</code>, Mac <code>~/Library/Application Support/FetchHelper</code></li>
+    <li>크롬·엣지·브레이브에 "fetch 확장이 이 헬퍼를 부를 수 있다"고 등록해요 (Native Messaging, 현재 사용자만).</li>
+    <li>이 컴퓨터 안에서만 열리는 작은 서버(<code>localhost:47321</code>)를 켜요. 인터넷에서는 접속할 수 없고, fetch 확장과 피그마 플러그인의 요청만 받아요.</li>
+    <li>다운로드 폴더 안의 이미지만 피그마로 넘겨요. 아무것도 인터넷으로 보내지 않아요.</li>
+    <li>6시간 동안 쓰지 않으면 스스로 꺼지고, 크롬이 필요할 때 다시 켜요.</li>
+  </ul>
+  <p class="small">설치 스크립트와 헬퍼의 전체 코드: <a href="install.ps1">install.ps1</a> · <a href="server.ps1">server.ps1</a> · <a href="host.ps1">host.ps1</a> · <a href="install.sh">install.sh</a> · <a href="server.pl">server.pl</a> · <a href="host.pl">host.pl</a></p>
+
+  <h2>제거</h2>
+  <p>fetch 팝업의 피그마 줄에서 <b>제거</b>를 누르면 등록 정보와 헬퍼 폴더가 지워져요.</p>
+
+  <footer>fetch · <a href="/privacy/">개인정보처리방침</a> · 문의 <a href="mailto:fetchbypatch@gmail.com">fetchbypatch@gmail.com</a></footer>
+</main>
+<script>
+  const show = (os) => {
+    document.getElementById('win').hidden = os !== 'win';
+    document.getElementById('mac').hidden = os !== 'mac';
+    document.getElementById('tabWin').setAttribute('aria-selected', String(os === 'win'));
+    document.getElementById('tabMac').setAttribute('aria-selected', String(os === 'mac'));
+  };
+  const q = new URLSearchParams(location.search).get('os');
+  show(q === 'mac' || (!q && /Mac/i.test(navigator.platform)) ? 'mac' : 'win');
+  document.getElementById('tabWin').onclick = () => show('win');
+  document.getElementById('tabMac').onclick = () => show('mac');
+  document.querySelectorAll('[data-copy]').forEach((b) => {
+    b.onclick = async () => {
+      await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent.trim());
+      b.textContent = '복사됨'; setTimeout(() => (b.textContent = '복사'), 1500);
+    };
+  });
+</script>
+</body>
+</html>

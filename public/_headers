@@ -1,0 +1,6 @@
+/helper/*.ps1
+  Content-Type: text/plain; charset=utf-8
+/helper/*.sh
+  Content-Type: text/plain; charset=utf-8
+/helper/*.pl
+  Content-Type: text/plain; charset=utf-8

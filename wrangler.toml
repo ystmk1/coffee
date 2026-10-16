@@ -9,3 +9,8 @@ keep_vars = true
 # 계좌 정보는 여기 적지 말고 대시보드(Settings → Variables and Secrets)나 아래 명령으로 넣는다 (Git에 올라가지 않음):
 #   npx wrangler secret put BANK
 #   npx wrangler secret put ACCOUNT
+
+# fetch 웹사이트 (헬퍼 설치 /helper/, 개인정보처리방침 /privacy/). fetch/build-store.mjs가 만든 dist/site를 여기에 복사한다.
+# 파일이 없는 주소(/, /go, /coffee-qr.js)는 worker.js가 처리한다.
+[assets]
+directory = "./public"
