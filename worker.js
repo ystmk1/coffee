@@ -84,11 +84,11 @@ const BASE_CSS = `
 // fetch 강아지 (확장의 후원 카드와 같은 그림). 대두, 늘어진 귀, 콧잔등, 울망울망 눈이 깜빡이고 땀방울.
 const P = { body: "#dba468", ear: "#9a5f34", snout: "#f6dcb2", ink: "#24170f" };
 const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g class="tail"><path d="M74 104 Q90 102 93 88" stroke="${P.body}" stroke-width="6.5" stroke-linecap="round" fill="none"/></g>
-    <path d="M43 84 C43 78 50 75 60 75 C70 75 77 78 77 84 L77 108 C77 114 72 117 60 117 C48 117 43 114 43 108 Z" fill="${P.body}"/>
-    <ellipse cx="60" cy="93" rx="9" ry="12" fill="${P.snout}"/>
-    <path d="M51 98 L51 115" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
-    <path d="M69 98 L69 115" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
+    <g class="tail"><path d="M77 104 Q92 102 95 88" stroke="${P.body}" stroke-width="6.5" stroke-linecap="round" fill="none"/></g>
+    <path d="M60 75 C73 75 80 86 80 98 C80 110 72 117.5 60 117.5 C48 117.5 40 110 40 98 C40 86 47 75 60 75 Z" fill="${P.body}"/>
+    <ellipse cx="60" cy="97" rx="11" ry="12" fill="${P.snout}"/>
+    <path d="M54.5 106 L54.5 116" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
+    <path d="M65.5 106 L65.5 116" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
     <ellipse cx="50" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/><ellipse cx="70" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/>
     <g transform="translate(60 52) scale(1.3) translate(-60 -52)"><g class="head">
       <path d="M39 21 C30 18 21 26 21 43 C21 59 24 71 30 72.5 C36 73.5 38.5 65 38.5 53 Z" fill="${P.ear}"/>
