@@ -14,3 +14,8 @@ keep_vars = true
 # 파일이 없는 주소(/, /go, /coffee-qr.js)는 worker.js가 처리한다.
 [assets]
 directory = "./public"
+
+# 피그마 플러그인 쿠폰의 짧은 코드 → 서명된 쿠폰 (coffee/license/license.mjs 가 등록한다)
+[[kv_namespaces]]
+binding = "COUPONS"
+id = "122666b3ea204177b423ca22d8ed1a71"

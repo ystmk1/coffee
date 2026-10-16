@@ -221,10 +221,57 @@ const parseAmount = (v, fallback) => {
   return Number.isInteger(n) && n > 0 && n <= MAX_AMOUNT ? n : null;
 };
 
+// ---------- 쿠폰 짧은 코드 (fetch 피그마 플러그인) ----------
+// 짧은 코드("CRE8", "K7QM-2XPA") → 서명된 긴 쿠폰. 우리 키로 그 코드(payload.k)에 맞게 서명된 쿠폰만 받으므로
+// 다른 사람은 코드를 추가하거나 바꿀 수 없다. 비밀 키는 개발자 PC(coffee/license)에만 있고 여기엔 공개 키만 있다.
+// 등록·취소는 갓 만든(10분 안) 서명만 받는다: 받아 간 쿠폰을 나중에 다시 올려 취소를 되돌릴 수 없게.
+const COUPON_KEY = { kty: "EC", crv: "P-256", x: "gvIni2-fmv30W141GtnwCgdMxd7_FrPt41KPKdAile4", y: "BAilyUw44FUamTZDlww7mIiBfsoRAy84ZkUak231aw0" };
+const CODE_RE = /^[A-Z0-9-]{3,16}$/;
+const FRESH_MS = 10 * 60 * 1000;
+const CORS = { "access-control-allow-origin": "*", "access-control-allow-methods": "GET, POST, OPTIONS", "access-control-allow-headers": "content-type" };
+const normCode = (s) => String(s || "").toUpperCase().replace(/\s+/g, "");
+const unb64 = (s) => Uint8Array.from(atob(String(s).replace(/-/g, "+").replace(/_/g, "/") + "===".slice((String(s).length + 3) % 4)), (c) => c.charCodeAt(0));
+
+async function readSigned(token) {
+  try {
+    const [body, sig] = String(token || "").split(".");
+    const key = await crypto.subtle.importKey("jwk", COUPON_KEY, { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"]);
+    const msg = unb64(body);
+    if (!(await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, key, unb64(sig), msg))) return null;
+    return JSON.parse(new TextDecoder().decode(msg));
+  } catch (_) { return null; }
+}
+
+async function couponApi(request, env, url) {
+  const reply = (obj, status = 200) => new Response(JSON.stringify(obj), { status, headers: { ...CORS, "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
+  if (request.method === "OPTIONS") return new Response(null, { headers: CORS });
+  if (!env.COUPONS) return reply({ error: "no store" }, 500);
+  if (request.method === "GET") {
+    const code = normCode(url.searchParams.get("code"));
+    if (!CODE_RE.test(code)) return reply({ error: "bad code" }, 400);
+    const token = await env.COUPONS.get(code);
+    return token ? reply({ token }) : reply({ error: "not found" }, 404);
+  }
+  if (request.method === "POST") {
+    const body = await request.json().catch(() => null);
+    const p = body && (await readSigned(body.token));
+    if (!p || p.v !== 1 || !CODE_RE.test(p.k || "")) return reply({ error: "not signed" }, 403);
+    if (!(Math.abs(Date.now() - (p.iat || 0)) < FRESH_MS)) return reply({ error: "stale" }, 403);
+    if (p.t === "revoke") { await env.COUPONS.delete(p.k); return reply({ ok: true, revoked: p.k }); }
+    if (!(p.exp > Date.now() + 120e3)) return reply({ error: "expired" }, 400);
+    const replaced = !!(await env.COUPONS.get(p.k));
+    await env.COUPONS.put(p.k, body.token, { expiration: Math.floor(p.exp / 1000) }); // KV drops it when it ends
+    return reply({ ok: true, code: p.k, replaced });
+  }
+  return reply({ error: "method" }, 405);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const device = deviceOf(request);
+
+    if (url.pathname === "/coupon") return couponApi(request, env, url);
 
     if (url.pathname === "/coffee-qr.js") {
       return new Response(QR_LIB, { headers: { "content-type": "text/javascript; charset=utf-8", "cache-control": "public, max-age=86400" } });
