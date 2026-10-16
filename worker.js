@@ -91,23 +91,20 @@ const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w
     <path d="M65.5 106 L65.5 116" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
     <ellipse cx="50" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/><ellipse cx="70" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/>
     <g transform="translate(60 52) scale(1.3) translate(-60 -52)"><g class="head">
-      <path d="M39 21 C30 18 21 26 21 43 C21 59 24 71 30 72.5 C36 73.5 38.5 65 38.5 53 Z" fill="${P.ear}"/>
-      <path d="M81 21 C90 18 99 26 99 43 C99 59 96 71 90 72.5 C84 73.5 81.5 65 81.5 53 Z" fill="${P.ear}"/>
+      <ellipse cx="30.5" cy="40" rx="12" ry="21" transform="rotate(15 30.5 40)" fill="${P.ear}"/>
+      <ellipse cx="89.5" cy="40" rx="12" ry="21" transform="rotate(-15 89.5 40)" fill="${P.ear}"/>
       <circle cx="60" cy="46" r="29" fill="${P.body}"/>
-      <path d="M55.5 17.6 Q60 16.8 64.5 17.6 L62.8 40 Q60 41.2 57.2 40 Z" fill="#e9bd85"/>
-      <path d="M57.2 39.5 Q60 38.2 62.8 39.5 L64.6 51 Q72.5 52.5 76.5 60 Q78.5 70.5 60 75 Q41.5 70.5 43.5 60 Q47.5 52.5 55.4 51 Z" fill="${P.snout}"/>
-      <path d="M57.6 42 Q56.4 47 55.4 51 M62.4 42 Q63.6 47 64.6 51" stroke="${P.ear}" stroke-width=".9" stroke-linecap="round" fill="none" opacity=".35"/>
-      <ellipse cx="38" cy="59" rx="5" ry="3" fill="#ff9aa8" opacity=".5"/><ellipse cx="82" cy="59" rx="5" ry="3" fill="#ff9aa8" opacity=".5"/>
-      <path d="M53.6 54.2 Q60 51.4 66.4 54.2 Q65.6 59.6 60 60.8 Q54.4 59.6 53.6 54.2 Z" fill="${P.ink}"/><ellipse cx="58" cy="54.4" rx="2.2" ry="1" fill="#fff" opacity=".35"/>
-      <path d="M60 60.8 v2.4 M54.5 64.6 q2.75 2.6 5.5 0 q2.75 2.6 5.5 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-      <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M37 33 Q43 27 50 30"/><path d="M70 30 Q77 27 83 33"/></g>
+      <path d="M55.6 19 Q60 18 64.8 19 L62.6 48.5 Q60 50 57.4 48.5 Z" fill="#e9bd85"/>
+      <ellipse cx="60" cy="61.6" rx="18.4" ry="12.8" fill="${P.snout}"/>
+      <path d="M52.7 54.5 Q60 51.8 67.3 54.5 Q66.5 61.5 60 63.4 Q53.5 61.5 52.7 54.5 Z" fill="${P.ink}"/><ellipse cx="57.3" cy="55" rx="2.6" ry="1.1" fill="#fff" opacity=".35"/>
+      <path d="M60 63.4 v2.2 M55 67 q2.5 2.4 5 0 q2.5 2.4 5 0" stroke="${P.ink}" stroke-width="1.5" fill="none" stroke-linecap="round"/>
       <g class="eyes">
-        <circle cx="45.5" cy="44" r="9" fill="${P.ink}"/><circle cx="74.5" cy="44" r="9" fill="${P.ink}"/>
-        <circle cx="48.5" cy="40.5" r="3.4" fill="#fff"/><circle cx="43" cy="48" r="1.6" fill="#fff"/>
-        <circle cx="77.5" cy="40.5" r="3.4" fill="#fff"/><circle cx="72" cy="48" r="1.6" fill="#fff"/>
+        <circle cx="46" cy="43" r="8.5" fill="${P.ink}"/><circle cx="74" cy="43" r="8.5" fill="${P.ink}"/>
+        <circle cx="48.8" cy="39.8" r="3.2" fill="#fff"/><circle cx="43.6" cy="46.8" r="1.5" fill="#fff"/>
+        <circle cx="76.8" cy="39.8" r="3.2" fill="#fff"/><circle cx="71.6" cy="46.8" r="1.5" fill="#fff"/>
       </g>
-      <path d="M37 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
-      <path d="M66 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
+      <path d="M38 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
+      <path d="M66 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
       <g class="sweat"><path d="M90 14 C94.5 20 94.5 24.5 90 24.5 C85.5 24.5 85.5 20 90 14Z" fill="#4aa8ff"/><path d="M97 22 C100 26 100 29 97 29 C94 29 94 26 97 22Z" fill="#4aa8ff" opacity=".8"/></g>
     </g></g>
   </svg>`;
