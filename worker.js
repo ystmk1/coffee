@@ -66,10 +66,10 @@ const BASE_CSS = `
   .dog .tail{transform-box:fill-box;transform-origin:0 100%;animation:wag .32s ease-in-out infinite alternate}
   .dog .head{transform-box:fill-box;transform-origin:50% 90%;animation:tilt 2.4s ease-in-out infinite}
   .dog .eyes{transform-box:fill-box;transform-origin:50% 50%;animation:blink 3.8s ease-in-out infinite}
-  .dog .tear{animation:tear 2.2s ease-in infinite}
+  .dog .sweat{animation:sweat 1.6s ease-in infinite}
   @keyframes wag{from{transform:rotate(-16deg)}to{transform:rotate(20deg)}}
   @keyframes blink{0%,88%,100%{transform:scaleY(1)}91%{transform:scaleY(.08)}94%{transform:scaleY(1)}}
-  @keyframes tear{0%,40%{opacity:0;transform:translateY(0)}55%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+  @keyframes sweat{0%{opacity:0;transform:translate(0,-2px) scale(.7)}25%{opacity:1;transform:none}80%{opacity:1;transform:translate(2px,6px)}100%{opacity:0;transform:translate(3px,10px)}}
   @keyframes tilt{0%,30%{transform:rotate(0)}45%,75%{transform:rotate(-8deg)}90%,100%{transform:rotate(0)}}
   h1{font:800 22px/1.3 var(--sans);letter-spacing:-.03em;margin:6px 0 4px}
   p{color:var(--ink-2);margin:6px 0}
@@ -81,20 +81,23 @@ const BASE_CSS = `
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 `;
 
-// fetch 강아지 (확장의 후원 카드와 같은 그림). 대두에 울망울망 눈, 깜빡이기만 한다.
+// fetch 강아지 (확장의 후원 카드와 같은 그림). 대두, 늘어진 귀, 콧잔등, 울망울망 눈이 깜빡이고 땀방울.
 const P = { body: "#dba468", ear: "#9a5f34", snout: "#f6dcb2", ink: "#24170f" };
 const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g class="tail"><path d="M80 102 Q100 98 104 80" stroke="${P.body}" stroke-width="7" stroke-linecap="round" fill="none"/></g>
-    <ellipse cx="60" cy="99" rx="26" ry="21" fill="${P.body}"/>
-    <ellipse cx="60" cy="103" rx="13" ry="14" fill="${P.snout}"/>
-    <ellipse cx="50" cy="117" rx="8" ry="5" fill="${P.ear}"/><ellipse cx="70" cy="117" rx="8" ry="5" fill="${P.ear}"/>
-    <g transform="translate(60 54) scale(1.3) translate(-60 -54)"><g class="head">
-      <path d="M41 21 C30 15 17 22 18 39 C19 52 23 61 30 62 C37 62.5 40 54 40 46 Z" fill="${P.ear}"/>
-      <path d="M79 21 C90 15 103 22 102 39 C101 52 97 61 90 62 C83 62.5 80 54 80 46 Z" fill="${P.ear}"/>
+    <g class="tail"><path d="M74 104 Q90 102 93 88" stroke="${P.body}" stroke-width="6.5" stroke-linecap="round" fill="none"/></g>
+    <path d="M43 84 C43 78 50 75 60 75 C70 75 77 78 77 84 L77 108 C77 114 72 117 60 117 C48 117 43 114 43 108 Z" fill="${P.body}"/>
+    <ellipse cx="60" cy="93" rx="9" ry="12" fill="${P.snout}"/>
+    <path d="M51 98 L51 115" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
+    <path d="M69 98 L69 115" stroke="${P.ear}" stroke-width="1.4" stroke-linecap="round" opacity=".35"/>
+    <ellipse cx="50" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/><ellipse cx="70" cy="117.5" rx="7" ry="4.2" fill="${P.ear}"/>
+    <g transform="translate(60 52) scale(1.3) translate(-60 -52)"><g class="head">
+      <path d="M39 21 C30 18 21 26 21 43 C21 59 24 71 30 72.5 C36 73.5 38.5 65 38.5 53 Z" fill="${P.ear}"/>
+      <path d="M81 21 C90 18 99 26 99 43 C99 59 96 71 90 72.5 C84 73.5 81.5 65 81.5 53 Z" fill="${P.ear}"/>
       <circle cx="60" cy="46" r="29" fill="${P.body}"/>
-      <path d="M55.5 17.6 Q60 16.8 64.5 17.6 L62.6 39 Q60 41.5 57.4 39 Z" fill="#e9bd85"/>
-      <ellipse cx="41" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/><ellipse cx="79" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/>
-      <ellipse cx="60" cy="63" rx="17.5" ry="11.5" fill="${P.snout}"/>
+      <path d="M55.5 17.6 Q60 16.8 64.5 17.6 L62.8 40 Q60 41.2 57.2 40 Z" fill="#e9bd85"/>
+      <path d="M57.2 39.5 Q60 38.2 62.8 39.5 L64.6 51 Q72.5 52.5 76.5 60 Q78.5 70.5 60 75 Q41.5 70.5 43.5 60 Q47.5 52.5 55.4 51 Z" fill="${P.snout}"/>
+      <path d="M57.6 42 Q56.4 47 55.4 51 M62.4 42 Q63.6 47 64.6 51" stroke="${P.ear}" stroke-width=".9" stroke-linecap="round" fill="none" opacity=".35"/>
+      <ellipse cx="38" cy="59" rx="5" ry="3" fill="#ff9aa8" opacity=".5"/><ellipse cx="82" cy="59" rx="5" ry="3" fill="#ff9aa8" opacity=".5"/>
       <path d="M53.6 54.2 Q60 51.4 66.4 54.2 Q65.6 59.6 60 60.8 Q54.4 59.6 53.6 54.2 Z" fill="${P.ink}"/><ellipse cx="58" cy="54.4" rx="2.2" ry="1" fill="#fff" opacity=".35"/>
       <path d="M60 60.8 v2.4 M54.5 64.6 q2.75 2.6 5.5 0 q2.75 2.6 5.5 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
       <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M37 33 Q43 27 50 30"/><path d="M70 30 Q77 27 83 33"/></g>
@@ -105,7 +108,7 @@ const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w
       </g>
       <path d="M37 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
       <path d="M66 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
-      <path class="tear" d="M40 53 C43 58 43 61 40 61 C37 61 37 58 40 53Z" fill="#4aa8ff"/>
+      <g class="sweat"><path d="M90 14 C94.5 20 94.5 24.5 90 24.5 C85.5 24.5 85.5 20 90 14Z" fill="#4aa8ff"/><path d="M97 22 C100 26 100 29 97 29 C94 29 94 26 97 22Z" fill="#4aa8ff" opacity=".8"/></g>
     </g></g>
   </svg>`;
 
