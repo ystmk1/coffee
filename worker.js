@@ -69,7 +69,7 @@ const BASE_CSS = `
   .dog .sweat{animation:sweat 1.6s ease-in infinite}
   @keyframes wag{from{transform:rotate(-16deg)}to{transform:rotate(20deg)}}
   @keyframes blink{0%,88%,100%{transform:scaleY(1)}91%{transform:scaleY(.08)}94%{transform:scaleY(1)}}
-  @keyframes sweat{0%{opacity:0;transform:translate(0,-2px) scale(.7)}25%{opacity:1;transform:none}80%{opacity:1;transform:translate(2px,6px)}100%{opacity:0;transform:translate(3px,10px)}}
+  @keyframes sweat{0%{opacity:0;transform:translate(-3px,1px) scale(.6)}25%{opacity:1;transform:none}80%{opacity:1;transform:translate(7px,-1px)}100%{opacity:0;transform:translate(10px,1px)}}
   @keyframes tilt{0%,30%{transform:rotate(0)}45%,75%{transform:rotate(-8deg)}90%,100%{transform:rotate(0)}}
   h1{font:800 22px/1.3 var(--sans);letter-spacing:-.03em;margin:6px 0 4px}
   p{color:var(--ink-2);margin:6px 0}
@@ -105,7 +105,7 @@ const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w
       </g>
       <path d="M38 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
       <path d="M66 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
-      <g class="sweat"><path d="M90 14 C94.5 20 94.5 24.5 90 24.5 C85.5 24.5 85.5 20 90 14Z" fill="#4aa8ff"/><path d="M97 22 C100 26 100 29 97 29 C94 29 94 26 97 22Z" fill="#4aa8ff" opacity=".8"/></g>
+      <g class="sweat"><path transform="rotate(-75 91 21)" d="M91 15 C95 20.5 95 25 91 25 C87 25 87 20.5 91 15Z" fill="#4aa8ff"/><path transform="rotate(-60 98 28)" d="M98 24 C100.8 27.5 100.8 30.5 98 30.5 C95.2 30.5 95.2 27.5 98 24Z" fill="#4aa8ff" opacity=".8"/></g>
     </g></g>
   </svg>`;
 
