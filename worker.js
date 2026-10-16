@@ -103,6 +103,10 @@ const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w
         <circle cx="48.8" cy="39.8" r="3.2" fill="#fff"/><circle cx="43.6" cy="46.8" r="1.5" fill="#fff"/>
         <circle cx="76.8" cy="39.8" r="3.2" fill="#fff"/><circle cx="71.6" cy="46.8" r="1.5" fill="#fff"/>
       </g>
+      <g class="lids">
+        <path d="M35.5 30 L55.5 30 L55.5 34 L35.5 38.6 Z" fill="${P.body}"/><path d="M64.5 30 L84.5 30 L84.5 38.6 L64.5 34 Z" fill="${P.body}"/>
+        <path d="M36.5 38.3 L55.6 34 M64.4 34 L83.5 38.3" stroke="${P.ink}" stroke-width="1.7" stroke-linecap="round" fill="none"/>
+      </g>
       <path d="M38 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
       <path d="M66 49 q8 5.5 16 0" stroke="#7cc4ff" stroke-width="1.3" fill="none" opacity=".8"/>
       <g class="sweat"><path transform="rotate(-75 91 21)" d="M91 15 C95 20.5 95 25 91 25 C87 25 87 20.5 91 15Z" fill="#4aa8ff"/><path transform="rotate(-60 98 28)" d="M98 24 C100.8 27.5 100.8 30.5 98 30.5 C95.2 30.5 95.2 27.5 98 24Z" fill="#4aa8ff" opacity=".8"/></g>
