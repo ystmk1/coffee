@@ -65,9 +65,11 @@ const BASE_CSS = `
   .dog{width:112px;height:112px;margin:10px auto 0;display:block}
   .dog .tail{transform-box:fill-box;transform-origin:0 100%;animation:wag .32s ease-in-out infinite alternate}
   .dog .head{transform-box:fill-box;transform-origin:50% 90%;animation:tilt 2.4s ease-in-out infinite}
-  .dog .happy{display:none}
-  .dog.glad .open,.dog.glad .brow{display:none}.dog.glad .happy{display:inline}.dog.glad .tail{animation-duration:.12s}
+  .dog .eyes{transform-box:fill-box;transform-origin:50% 50%;animation:blink 3.8s ease-in-out infinite}
+  .dog .tear{animation:tear 2.2s ease-in infinite}
   @keyframes wag{from{transform:rotate(-16deg)}to{transform:rotate(20deg)}}
+  @keyframes blink{0%,88%,100%{transform:scaleY(1)}91%{transform:scaleY(.08)}94%{transform:scaleY(1)}}
+  @keyframes tear{0%,40%{opacity:0;transform:translateY(0)}55%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
   @keyframes tilt{0%,30%{transform:rotate(0)}45%,75%{transform:rotate(-8deg)}90%,100%{transform:rotate(0)}}
   h1{font:800 22px/1.3 var(--sans);letter-spacing:-.03em;margin:6px 0 4px}
   p{color:var(--ink-2);margin:6px 0}
@@ -79,24 +81,32 @@ const BASE_CSS = `
   @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 `;
 
-// fetch 강아지 (확장의 후원 카드와 같은 그림). glad 클래스면 웃는 얼굴.
+// fetch 강아지 (확장의 후원 카드와 같은 그림). 대두에 울망울망 눈, 깜빡이기만 한다.
 const P = { body: "#d9a066", ear: "#a8693a", snout: "#f2d2a2", ink: "#2b1d14" };
 const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <g class="tail"><path d="M84 96 Q104 90 106 70" stroke="${P.body}" stroke-width="8" stroke-linecap="round" fill="none"/></g>
-  <ellipse cx="60" cy="92" rx="31" ry="27" fill="${P.body}"/><ellipse cx="60" cy="96" rx="16" ry="19" fill="${P.snout}"/>
-  <ellipse cx="49" cy="117" rx="9" ry="5.5" fill="${P.ear}"/><ellipse cx="71" cy="117" rx="9" ry="5.5" fill="${P.ear}"/>
-  <g class="head">
-    <path d="M33 30 C18 34 16 60 26 70 C33 64 36 46 38 34Z" fill="${P.ear}"/><path d="M87 30 C102 34 104 60 94 70 C87 64 84 46 82 34Z" fill="${P.ear}"/>
-    <circle cx="60" cy="46" r="29" fill="${P.body}"/>
-    <ellipse cx="42" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/><ellipse cx="78" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/>
-    <ellipse cx="60" cy="61" rx="14" ry="10.5" fill="${P.snout}"/><ellipse cx="60" cy="55.5" rx="5.2" ry="3.8" fill="${P.ink}"/>
-    <path d="M60 59 v4 M54 65 q6 4 12 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-    <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M38 34 Q44 28 51 31"/><path d="M69 31 Q76 28 82 34"/></g>
-    <g class="open"><circle cx="46" cy="44" r="8" fill="${P.ink}"/><circle cx="74" cy="44" r="8" fill="${P.ink}"/>
-      <circle cx="48.6" cy="41" r="3" fill="#fff"/><circle cx="44" cy="47.5" r="1.4" fill="#fff"/><circle cx="76.6" cy="41" r="3" fill="#fff"/><circle cx="72" cy="47.5" r="1.4" fill="#fff"/></g>
-    <g class="happy"><path d="M39 46 q7 -8 14 0 M67 46 q7 -8 14 0" stroke="${P.ink}" stroke-width="2.4" stroke-linecap="round" fill="none"/>
-      <path d="M55 66 q5 10 10 0z" fill="#ff6f8a"/></g>
-  </g></svg>`;
+    <g class="tail"><path d="M80 102 Q100 98 104 80" stroke="${P.body}" stroke-width="7" stroke-linecap="round" fill="none"/></g>
+    <ellipse cx="60" cy="99" rx="26" ry="21" fill="${P.body}"/>
+    <ellipse cx="60" cy="103" rx="13" ry="14" fill="${P.snout}"/>
+    <ellipse cx="50" cy="117" rx="8" ry="5" fill="${P.ear}"/><ellipse cx="70" cy="117" rx="8" ry="5" fill="${P.ear}"/>
+    <g transform="translate(60 54) scale(1.3) translate(-60 -54)"><g class="head">
+      <path d="M33 30 C18 34 16 60 26 70 C33 64 36 46 38 34Z" fill="${P.ear}"/>
+      <path d="M87 30 C102 34 104 60 94 70 C87 64 84 46 82 34Z" fill="${P.ear}"/>
+      <circle cx="60" cy="46" r="29" fill="${P.body}"/>
+      <ellipse cx="41" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/><ellipse cx="79" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/>
+      <ellipse cx="60" cy="61" rx="13" ry="10" fill="${P.snout}"/>
+      <ellipse cx="60" cy="56" rx="5" ry="3.6" fill="${P.ink}"/>
+      <path d="M60 59.5 v3 M54.5 64 q2.75 2.6 5.5 0 q2.75 2.6 5.5 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M37 33 Q43 27 50 30"/><path d="M70 30 Q77 27 83 33"/></g>
+      <g class="eyes">
+        <circle cx="45.5" cy="44" r="9" fill="${P.ink}"/><circle cx="74.5" cy="44" r="9" fill="${P.ink}"/>
+        <circle cx="48.5" cy="40.5" r="3.4" fill="#fff"/><circle cx="43" cy="48" r="1.6" fill="#fff"/>
+        <circle cx="77.5" cy="40.5" r="3.4" fill="#fff"/><circle cx="72" cy="48" r="1.6" fill="#fff"/>
+      </g>
+      <path d="M37 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
+      <path d="M66 50 q8.5 6 17 0" stroke="#7cc4ff" stroke-width="1.4" fill="none" opacity=".8"/>
+      <path class="tear" d="M40 53 C43 58 43 61 40 61 C37 61 37 58 40 53Z" fill="#4aa8ff"/>
+    </g></g>
+  </svg>`;
 
 // ---------- 휴대폰: 토스를 바로 연다 ----------
 // 바로 302로 커스텀 스킴에 넘기면 브라우저가 막는 경우가 있어서,
@@ -114,7 +124,7 @@ ${FONT_LINK}
 <style>${BASE_CSS}</style></head>
 <body><main>
   <span class="brand"><i></i>fetch</span>
-  ${DOG.replace('class="dog"', 'class="dog glad"')}
+  ${DOG}
   <h1>${won(amount)} 보내기</h1>
   <p>토스가 자동으로 열리지 않으면 아래 버튼을 눌러 주세요.<br>금액은 토스에서 바꿔도 돼요.</p>
   <a class="send" href="${href}">토스로 보내기</a>
@@ -182,7 +192,6 @@ ${FONT_LINK}
     $("customBox").classList.toggle("on", !cups.some((b) => +b.dataset.amount === amount));
     $("send").textContent = ok ? "토스로 " + fmt(amount) + " 보내기" : "금액을 입력해 주세요";
     $("send").setAttribute("aria-disabled", String(!ok));
-    $("dog").classList.toggle("glad", ok && amount >= ${CUP_PRICE * 5});
     $("send").href = ok ? "/go?amount=" + amount : "#";
     if (window.CoffeeQR && ok) $("qr").innerHTML = CoffeeQR.svg({ text: location.origin + "/go?amount=" + amount, size: 200 });
     history.replaceState(null, "", "/?amount=" + amount);
