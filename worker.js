@@ -46,17 +46,57 @@ function deviceOf(request) {
   return "desktop";
 }
 
+// fetch 디자인 시스템 (fetch/ui.css와 같은 토큰). 라이트/다크는 OS를 따른다.
+const FONT_LINK = '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">';
 const BASE_CSS = `
+  :root{--bg:#fff;--surface:#f5f4f0;--line:#e8e6e0;--line-strong:#949189;--ink:#17160f;--ink-2:#5e5c55;--ink-3:#6f6c64;
+    --ball:#d4f542;--on-ball:#17160f;--ball-subtle:#f1fac8;--ball-ink:#4d6100;--focus:#17160f;
+    --sans:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+    --radius-md:8px;--radius-lg:14px;color-scheme:light dark}
+  @media (prefers-color-scheme:dark){:root{--bg:#141412;--surface:#1e1d1a;--line:#2c2b27;--line-strong:#6b6862;--ink:#f3f1ea;--ink-2:#b4b1a8;--ink-3:#8e8b83;
+    --ball-subtle:#2a3110;--ball-ink:#d4f542;--focus:#d4f542}}
   *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
-    font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:#f4f5f7;color:#191f28}
-  main{background:#fff;border-radius:24px;padding:28px 24px;max-width:400px;width:100%;text-align:center}
-  h1{font-size:21px;margin:8px 0 4px;letter-spacing:-.02em}
-  p{color:#6b7684;font-size:14px;line-height:1.5;margin:6px 0}
-  .send{display:block;margin-top:16px;background:#0064ff;color:#fff;text-decoration:none;border-radius:14px;padding:16px;font-weight:700;font-size:17px}
-  .sub{color:#6b7684;font-size:13px;text-decoration:underline}
-  @media (prefers-color-scheme:dark){body{background:#101113;color:#f2f4f6}main{background:#1b1d21}}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:var(--surface);color:var(--ink);
+    font:400 14px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  main{background:var(--bg);border-radius:20px;padding:24px 22px 22px;max-width:400px;width:100%;text-align:center;box-shadow:0 1px 0 var(--line)}
+  .brand{display:inline-flex;align-items:center;gap:6px;font:700 15px/1 var(--sans);letter-spacing:-.03em;color:var(--ink)}
+  .brand i{width:8px;height:8px;border-radius:50%;background:var(--ball);box-shadow:0 0 0 1.5px var(--ink)}
+  .dog{width:112px;height:112px;margin:10px auto 0;display:block}
+  .dog .tail{transform-box:fill-box;transform-origin:0 100%;animation:wag .32s ease-in-out infinite alternate}
+  .dog .head{transform-box:fill-box;transform-origin:50% 90%;animation:tilt 2.4s ease-in-out infinite}
+  .dog .happy{display:none}
+  .dog.glad .open,.dog.glad .brow{display:none}.dog.glad .happy{display:inline}.dog.glad .tail{animation-duration:.12s}
+  @keyframes wag{from{transform:rotate(-16deg)}to{transform:rotate(20deg)}}
+  @keyframes tilt{0%,30%{transform:rotate(0)}45%,75%{transform:rotate(-8deg)}90%,100%{transform:rotate(0)}}
+  h1{font:800 22px/1.3 var(--sans);letter-spacing:-.03em;margin:6px 0 4px}
+  p{color:var(--ink-2);margin:6px 0}
+  .caption{font-size:12px;color:var(--ink-3)}
+  .send{display:block;margin-top:16px;background:var(--ball);color:var(--on-ball);text-decoration:none;border-radius:var(--radius-lg);
+    padding:16px;font:800 17px/1.2 var(--sans);letter-spacing:-.02em}
+  .send:hover{filter:brightness(.96)}
+  .sub{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 `;
+
+// fetch 강아지 (확장의 후원 카드와 같은 그림). glad 클래스면 웃는 얼굴.
+const P = { body: "#d9a066", ear: "#a8693a", snout: "#f2d2a2", ink: "#2b1d14" };
+const DOG = `<svg class="dog" id="dog" viewBox="0 0 120 124" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <g class="tail"><path d="M84 96 Q104 90 106 70" stroke="${P.body}" stroke-width="8" stroke-linecap="round" fill="none"/></g>
+  <ellipse cx="60" cy="92" rx="31" ry="27" fill="${P.body}"/><ellipse cx="60" cy="96" rx="16" ry="19" fill="${P.snout}"/>
+  <ellipse cx="49" cy="117" rx="9" ry="5.5" fill="${P.ear}"/><ellipse cx="71" cy="117" rx="9" ry="5.5" fill="${P.ear}"/>
+  <g class="head">
+    <path d="M33 30 C18 34 16 60 26 70 C33 64 36 46 38 34Z" fill="${P.ear}"/><path d="M87 30 C102 34 104 60 94 70 C87 64 84 46 82 34Z" fill="${P.ear}"/>
+    <circle cx="60" cy="46" r="29" fill="${P.body}"/>
+    <ellipse cx="42" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/><ellipse cx="78" cy="60" rx="5.5" ry="3.2" fill="#ff9aa8" opacity=".55"/>
+    <ellipse cx="60" cy="61" rx="14" ry="10.5" fill="${P.snout}"/><ellipse cx="60" cy="55.5" rx="5.2" ry="3.8" fill="${P.ink}"/>
+    <path d="M60 59 v4 M54 65 q6 4 12 0" stroke="${P.ink}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <g class="brow" stroke="${P.ink}" stroke-width="2" stroke-linecap="round" fill="none"><path d="M38 34 Q44 28 51 31"/><path d="M69 31 Q76 28 82 34"/></g>
+    <g class="open"><circle cx="46" cy="44" r="8" fill="${P.ink}"/><circle cx="74" cy="44" r="8" fill="${P.ink}"/>
+      <circle cx="48.6" cy="41" r="3" fill="#fff"/><circle cx="44" cy="47.5" r="1.4" fill="#fff"/><circle cx="76.6" cy="41" r="3" fill="#fff"/><circle cx="72" cy="47.5" r="1.4" fill="#fff"/></g>
+    <g class="happy"><path d="M39 46 q7 -8 14 0 M67 46 q7 -8 14 0" stroke="${P.ink}" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+      <path d="M55 66 q5 10 10 0z" fill="#ff6f8a"/></g>
+  </g></svg>`;
 
 // ---------- 휴대폰: 토스를 바로 연다 ----------
 // 바로 302로 커스텀 스킴에 넘기면 브라우저가 막는 경우가 있어서,
@@ -69,16 +109,18 @@ function openPage(link, amount, device) {
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>토스로 보내기</title>
+<title>토스로 보내기 · fetch</title>
+${FONT_LINK}
 <style>${BASE_CSS}</style></head>
 <body><main>
-  <div style="font-size:44px">☕️</div>
+  <span class="brand"><i></i>fetch</span>
+  ${DOG.replace('class="dog"', 'class="dog glad"')}
   <h1>${won(amount)} 보내기</h1>
-  <p>토스가 자동으로 열리지 않으면 아래 버튼을 눌러주세요.<br>금액은 토스에서 바꿔도 돼요.</p>
+  <p>토스가 자동으로 열리지 않으면 아래 버튼을 눌러 주세요.<br>금액은 토스에서 바꿔도 돼요.</p>
   <a class="send" href="${href}">토스로 보내기</a>
-  <p style="margin-top:16px">토스 앱이 없나요? <a class="sub" href="${store}">토스 설치하기</a><br>
+  <p class="caption" style="margin-top:16px">토스 앱이 없나요? <a class="sub" href="${store}">토스 설치하기</a><br>
     카카오톡·인스타그램 안에서 열었다면 메뉴의 "다른 브라우저로 열기"를 눌러 주세요.</p>
-  <p style="margin-top:12px"><a class="sub" href="/?amount=${amount}">다른 금액 고르기</a></p>
+  <p class="caption" style="margin-top:10px"><a class="sub" href="/?amount=${amount}">다른 금액 고르기</a></p>
 </main>
 <script>location.href = ${JSON.stringify(link)};</script>
 </body></html>`;
@@ -93,38 +135,39 @@ function choosePage(amount, device) {
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>커피 한 잔 사 주기</title>
+<title>커피 한 잔 사 주기 · fetch</title>
+${FONT_LINK}
 <style>${BASE_CSS}
   .cups{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
-  .cup{border:2px solid #e5e8eb;background:#fff;color:inherit;border-radius:14px;padding:12px 4px;font:inherit;cursor:pointer}
-  .cup b{display:block;font-size:16px}
-  .cup span{display:block;font-size:13px;color:#6b7684;margin-top:2px}
-  .cup[aria-pressed=true]{border-color:#0064ff;background:#e8f3ff}
-  .custom{display:flex;align-items:center;gap:8px;margin-top:8px;border:2px solid #e5e8eb;border-radius:14px;padding:0 14px;text-align:left}
-  .custom.on{border-color:#0064ff}
-  .custom label{font-size:14px;color:#6b7684;white-space:nowrap}
-  .custom input{flex:1;min-width:0;border:0;background:none;color:inherit;font:inherit;font-size:16px;padding:12px 0;outline:none;text-align:right}
+  .cup{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:var(--radius-lg);padding:12px 4px;font:inherit;cursor:pointer}
+  .cup:hover{background:var(--surface)}
+  .cup b{display:block;font:800 17px/1.3 var(--sans);letter-spacing:-.02em}
+  .cup span{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+  .cup[aria-pressed=true]{background:var(--ball-subtle);border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+  .cup[aria-pressed=true] span{color:var(--ink-2)}
+  .custom{display:flex;align-items:center;gap:8px;margin-top:8px;background:var(--surface);border:1px solid transparent;border-radius:var(--radius-lg);padding:0 16px;text-align:left}
+  .custom.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+  .custom label{font-size:14px;color:var(--ink-2);white-space:nowrap;font-weight:600}
+  .custom input{flex:1;min-width:0;border:0;background:none;color:var(--ink);font:700 17px/1 var(--sans);padding:14px 0;outline:none;text-align:right}
+  .custom input::placeholder{color:var(--ink-3)}
   .qrbox{margin-top:18px}
-  .qr{display:inline-block;padding:10px;background:#fff;border-radius:16px;border:1px solid #e5e8eb;line-height:0}
-  .qr svg{width:200px;height:200px}
-  .err{color:#f04452}
-  @media (prefers-color-scheme:dark){
-    .cup{background:#25282d;border-color:#33363b}.cup[aria-pressed=true]{background:#13294b;border-color:#3182f6}
-    .custom{border-color:#33363b}.custom.on{border-color:#3182f6}.qr{border-color:#33363b}
-  }
+  .qr{display:inline-block;padding:10px;background:#fff;border-radius:var(--radius-lg);border:1px solid var(--line);line-height:0}
+  .qr svg{width:196px;height:196px}
+  .send[aria-disabled=true]{opacity:.45;pointer-events:none}
 </style></head>
 <body><main>
-  <div style="font-size:44px">☕️</div>
+  <span class="brand"><i></i>fetch</span>
+  ${DOG}
   <h1>개발자에게 커피 한 잔</h1>
-  <p>마음에 드셨다면 커피 한 잔으로 응원해 주세요.</p>
+  <p>fetch가 마음에 드셨다면 커피 한 잔으로 응원해 주세요.</p>
   <div class="cups" role="group" aria-label="잔 수">${cups}</div>
   <div class="custom" id="customBox"><label for="custom">직접 입력</label><input id="custom" inputmode="numeric" autocomplete="off" placeholder="0"><span>원</span></div>
   <div class="qrbox" ${mobile ? "hidden" : ""}>
     <div class="qr" id="qr"></div>
-    <p>휴대폰 카메라로 찍으면 토스 송금 화면이 열려요</p>
+    <p class="caption">휴대폰 카메라로 찍으면 토스 송금 화면이 열려요</p>
   </div>
   <a class="send" id="send" href="/go?amount=${amount}">토스로 보내기</a>
-  <p id="note">${mobile ? "토스 앱이 열려요. 금액은 토스에서 바꿔도 돼요." : "버튼은 토스 앱이 있는 휴대폰에서 열려요."}</p>
+  <p class="caption" id="note">${mobile ? "토스 앱이 열려요. 금액은 토스에서 바꿔도 돼요." : "버튼은 토스 앱이 있는 휴대폰에서 열려요."}</p>
 </main>
 <script src="/coffee-qr.js"></script>
 <script>
@@ -138,7 +181,8 @@ function choosePage(amount, device) {
     cups.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.amount === amount)));
     $("customBox").classList.toggle("on", !cups.some((b) => +b.dataset.amount === amount));
     $("send").textContent = ok ? "토스로 " + fmt(amount) + " 보내기" : "금액을 입력해 주세요";
-    $("send").style.opacity = ok ? "" : ".4";
+    $("send").setAttribute("aria-disabled", String(!ok));
+    $("dog").classList.toggle("glad", ok && amount >= ${CUP_PRICE * 5});
     $("send").href = ok ? "/go?amount=" + amount : "#";
     if (window.CoffeeQR && ok) $("qr").innerHTML = CoffeeQR.svg({ text: location.origin + "/go?amount=" + amount, size: 200 });
     history.replaceState(null, "", "/?amount=" + amount);
